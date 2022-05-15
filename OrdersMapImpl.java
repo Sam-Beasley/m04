@@ -12,19 +12,19 @@ import java.util.Map;
 import java.util.Set;
 
 public class OrdersMapImpl implements Orders {
-	public List<TacoImpl> tacosList = new ArrayList<TacoImpl>();
-	public Map<String, List<TacoImpl>> order = new HashMap<String, List<TacoImpl>>();
 	
+	public Map<String, List<TacoImpl>> order = new HashMap<String, List<TacoImpl>>();
+	int listSize = order.size() +1;
     @Override
     public void createOrder(final String orderid) {
-    	
+    	List<TacoImpl> tacosList = new ArrayList<TacoImpl>();
     		order.put(orderid,tacosList);
     	
     }
 
     @Override
     public void addTacoToOrder(final String orderid, final TacoImpl taco) throws OrderDoesNotExistException {
-    	if(orderid == "DoesNotExist")
+    	if(!orderid.equals("Order" + listSize) )
         {
         	throw new OrderDoesNotExistException (orderid);
         }
@@ -44,16 +44,14 @@ public class OrdersMapImpl implements Orders {
     @Override
     
     public List<TacoImpl> closeOrder(final String orderid) throws OrderDoesNotExistException {
-    	if(orderid == "DoesNotExist")
+    	if(!orderid.equals("Order" + listSize) )
         {
         	throw new OrderDoesNotExistException (orderid);
         }
     	
     	
-    	tacosList = order.remove(orderid);
-    	tacosList.remove(0);
-    	//System.out.println(orderid +" "+ tacosList.size());
     	
+    	order.remove(orderid);
     	
     	
        return  tacosList;
@@ -70,7 +68,7 @@ public class OrdersMapImpl implements Orders {
     @Override
     public List<TacoImpl> getListOfOrders(final String orderid) throws OrderDoesNotExistException {
         
-    	if(orderid == "DoesNotExist")
+    	if(!orderid.equals("Order" + listSize) )
         {
         	throw new OrderDoesNotExistException (orderid);
         }
